@@ -1,74 +1,74 @@
-# React + TypeScript + Vite
+# 🎨 React Component Library (Test Task)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a small **React component library** built with **Vite** and documented using **Storybook**.  
+It was created as part of a front-end trainee assessment.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Project Overview
 
-## React Compiler
+The library includes **three reusable UI components**, each displayed and tested via Storybook.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🧩 Components
 
-## Expanding the ESLint configuration
+#### 1. Input Component
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Supports `text`, `password`, and `number` types
+- Has optional `clearable` mode
+- Password fields include a visibility toggle
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+#### 2. Toast Component
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Appears in the bottom-right corner
+- Auto-dismisses after a set duration
+- Includes smooth fade-in/fade-out animations
+- Supports types: `success`, `error`, `info`, `warning`
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+#### 3. Sidebar Menu
+
+- Slides in from the right
+- Supports nested submenus (accordion style)
+- Closes when clicking outside
+- Includes a “burger” button when closed
+
+---
+
+## 🧱 Tech Stack
+
+- ⚛️ React (with TypeScript)
+- ⚡ Vite
+- 📖 Storybook 9
+- 💅 CSS Modules
+- 🎞️ Optional animations via CSS transitions
+
+---
+
+## 🧩 Storybook Setup
+
+To run the component library in Storybook:
+
+```bash
+npm install
+npm run storybook
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🖼️ Screenshots
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 🔤 Input Component
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-# react-component-library-test
+| Variant   | Preview                                               |
+| --------- | ----------------------------------------------------- |
+| Text      | ![Input Text](./screenshots/input-text.png)           |
+| Password  | ![Input Password](./screenshots/input-password.png)   |
+| Clearable | ![Input Clearable](./screenshots/input-clearable.png) |
+
+### 🔔 Toast Component
+
+![Toast](./screenshots/toast.png)
+
+### 📂 Sidebar Menu
+
+| State      | Preview                                        |
+| ---------- | ---------------------------------------------- |
+| One Level  | ![Sidebar](./screenshots/sidebar.png)          |
+| Two Levels | ![Sidebar Menu](./screenshots/sidebarmenu.png) |
