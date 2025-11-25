@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
+
+type ToastType = "info" | "success" | "error";
 import "./App.css";
 
 import { SidebarMenu } from "./components/SidebarMenu/SidebarMenu";
@@ -12,7 +14,7 @@ function App() {
   // Toast state
   const [toastVisible, setToastVisible] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
-  const [toastType, setToastType] = useState("info");
+  const [toastType, setToastType] = useState<ToastType>("info");
 
   const menuItems = [
     { label: "Dashboard" },
@@ -26,7 +28,10 @@ function App() {
     },
   ];
 
-  const showToast = (msg: string, type: any = "info") => {
+  const showToast = (
+    msg: string,
+    type: "info" | "success" | "error" = "info"
+  ) => {
     setToastMessage(msg);
     setToastType(type);
     setToastVisible(true);
@@ -96,7 +101,7 @@ function App() {
 
       {/* Render Toast */}
       {toastVisible && (
-        <Toast message={toastMessage} type={toastType as any} duration={3000} />
+        <Toast message={toastMessage} type={toastType} duration={3000} />
       )}
     </div>
   );
