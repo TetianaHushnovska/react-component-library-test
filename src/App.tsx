@@ -1,8 +1,5 @@
 import { useState } from "react";
 
-type ToastType = "info" | "success" | "error";
-import "./App.css";
-
 import { SidebarMenu } from "./components/SidebarMenu/SidebarMenu";
 import { Input } from "./components/Input/Input";
 import { Toast } from "./components/Toast/Toast";
@@ -11,10 +8,21 @@ function App() {
   // Sidebar state
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Toast state
-  const [toastVisible, setToastVisible] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastType, setToastType] = useState<ToastType>("info");
+  // Toasts array (stack)
+  const [toasts, setToasts] = useState<
+    { id: number; message: string; type: string }[]
+  >([]);
+
+  const addToast = (message: string, type: string = "info") => {
+    const id = Date.now();
+
+    setToasts((prev) => [...prev, { id, message, type }]);
+
+    // Auto-remove toast after 3s
+    setTimeout(() => {
+      setToasts((prev) => prev.filter((t) => t.id !== id));
+    }, 3000);
+  };
 
   const menuItems = [
     { label: "Dashboard" },
@@ -28,66 +36,41 @@ function App() {
     },
   ];
 
-  const showToast = (
-    msg: string,
-    type: "info" | "success" | "error" = "info"
-  ) => {
-    setToastMessage(msg);
-    setToastType(type);
-    setToastVisible(true);
-
-    // Toast automatically hides after its own duration
-    // But if user clicks "show" several times — we re-trigger timeout
-  };
-
   return (
-    <div style={{ padding: "2rem" }}>
-      {/* ---------- SIDEBAR ---------- */}
-      <button
-        onClick={() => setSidebarOpen(true)}
-        style={{
-          padding: "0.6rem 1rem",
-          marginBottom: "1rem",
-          borderRadius: "8px",
-          border: "1px solid #ccc",
-          cursor: "pointer",
-        }}
-      >
-        Відкрити меню
-      </button>
+    <div style={{ padding: "20px" }}>
+      {/* ===== SIDEBAR BUTTON ===== */}
+      <button onClick={() => setSidebarOpen(true)}>Відкрити меню</button>
 
+      {/* ===== SIDEBAR ===== */}
       <SidebarMenu
         items={menuItems}
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
       />
 
-      {/* ---------- TOAST BUTTONS ---------- */}
       <h1>Компоненти на живій сторінці</h1>
 
-      <button
-        onClick={() => showToast("Це інформаційне повідомлення!", "info")}
-        style={{ marginRight: "1rem" }}
-      >
+      {/* ===== TOAST BUTTONS ===== */}
+      <h2>Toast повідомлення</h2>
+
+      <button onClick={() => addToast("Info message!", "info")}>
         Info Toast
       </button>
 
-      <button
-        onClick={() => showToast("Все успішно виконано!", "success")}
-        style={{ marginRight: "1rem" }}
-      >
+      <button onClick={() => addToast("Everything is successful!", "success")}>
         Success Toast
       </button>
 
-      <button
-        onClick={() => showToast("Щось пішло не так...", "error")}
-        style={{ marginRight: "1rem" }}
-      >
+      <button onClick={() => addToast("Щось пішло не так...", "error")}>
         Error Toast
       </button>
 
-      {/* ---------- INPUTS ---------- */}
-      <h2 style={{ marginTop: "2rem" }}>Інпути</h2>
+      <button onClick={() => addToast("Попередження!", "warning")}>
+        Warning Toast
+      </button>
+
+      {/* ===== INPUTS ===== */}
+      <h2>Інпути</h2>
 
       <Input placeholder="Звичайний інпут" />
       <br />
@@ -99,10 +82,12 @@ function App() {
 
       <Input clearable placeholder="Інпут з очисткою" />
 
-      {/* Render Toast */}
-      {toastVisible && (
-        <Toast message={toastMessage} type={toastType} duration={3000} />
-      )}
+      {/* ===== TOASTS STACK ===== */}
+      <div>
+        {toasts.map((t) => (
+          <Toast key={t.id} message={t.message} type={t.type as any} />
+        ))}
+      </div>
     </div>
   );
 }
